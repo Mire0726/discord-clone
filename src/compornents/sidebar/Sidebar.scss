@@ -12,8 +12,9 @@
     padding: 7px 15px;
 
     .serverIcon {
-      width: 60px;
-      height: 60px;
+      width: 55px;
+      height: 55px;
+      background-color: gray;
       border-radius: 9999px;
       margin-bottom: 10px;
       position: relative;
@@ -40,10 +41,10 @@
       justify-content: space-between;
     }
 
-    .sidebarChannnels {
+    .sidebarChannels {
       padding: 13px;
 
-      .sidebarChannnelsHeader {
+      .sidebarChannelsHeader {
         color: white;
         display: flex;
         justify-content: space-between;
