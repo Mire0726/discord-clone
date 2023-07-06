@@ -5,10 +5,13 @@ import Sidebar from "./compornents/sidebar/Sidebar";
 import Chat from "./compornents/chat/Chat";
 import userEvent from "@testing-library/user-event";
 import userSlice from "./features/userSlice";
+import Login from "./compornents/login/Login";
+import { useAppSelector } from "./app/hooks";
 
 function App() {
-  // const user = useSelector((state) => state.user.user);
-  const user = null;
+  const user = useAppSelector((state) => state.user);
+  // const user = null;
+  console.log(user);
 
   return (
     <div className="App">
