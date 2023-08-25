@@ -6,14 +6,13 @@ import SidebarChannel from "./SidebarChannel";
 import MicIcon from "@mui/icons-material/Mic";
 import { Headphones } from "@mui/icons-material";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { useAppSelector } from "../../app/hooks";
-import { collection, query } from "firebase/firestore/lite";
-import { QuerySnapshot, onSnapshot } from "firebase/firestore";
+// import { collection, query } from "firebase/firestore/lite";
+import { onSnapshot, collection, query } from "firebase/firestore";
 
 const Sidebar = () => {
   const user = useAppSelector((state) => state.user);
-
   const q = query(collection(db, "channels"));
 
   useEffect(() => {
@@ -22,6 +21,7 @@ const Sidebar = () => {
       QuerySnapshot.docs.forEach((doc) => console.log(doc));
     });
   }, []);
+
   return (
     <div className="sidebar">
       {/* sidebarLeft */}
