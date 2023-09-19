@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.scss";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
@@ -8,37 +8,23 @@ import { Headphones } from "@mui/icons-material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { auth, db } from "../../firebase";
 import { useAppSelector } from "../../app/hooks";
+import useCollection from "../../hooks/useCollection";
 // import { collection, query } from "firebase/firestore/lite";
-import {
-  onSnapshot,
-  collection,
-  query,
-  DocumentData,
-} from "firebase/firestore";
-
-interface Channal {
-  id: string;
-  channel: DocumentData;
-}
 
 const Sidebar = () => {
-  const [channels, setChannels] = useState<Channal[]>([]);
-
   const user = useAppSelector((state) => state.user);
-  const q = query(collection(db, "channels"));
+  const { documents: channels } = useCollection("channels");
 
-  useEffect(() => {
-    onSnapshot(q, (querySnapshot) => {
-      const channelsResults :Channal[]= [];
-      querySnapshot.docs.forEach((doc) =>
-        channelsResults.push({
-          id: doc.id,
-          channel: doc.data(),
-        })
-      );
-      setChannels(channelsResults);
-    });
-  }, []);
+  const addChannel = () => {
+    let channelName = prompt("新しいチャンネルを作成します");
+
+if (channelName){
+  await addDoc(collection(db,"channels"),{
+    channelName: channelName,
+  });
+}
+
+  };
 
   return (
     <div className="sidebar">
@@ -66,13 +52,16 @@ const Sidebar = () => {
               <ExpandMoreIcon />
               <h4>プログラミングチャンネル</h4>
             </div>
-            <AddIcon className="sidebarIcon" />
+            <AddIcon className="sidebarIcon" onClick={() => addChannel()} />
           </div>
 
           <div className="sidebarChannelLists">
-            {channels.map((channel)=>(
-            <SidebarChannel channel = {channel} id={channel.id} key = {channel.id}/>
-
+            {channels.map((channel) => (
+              <SidebarChannel
+                channel={channel}
+                id={channel.id}
+                key={channel.id}
+              />
             ))}
             {/* <SidebarChannel /> */}
           </div>
