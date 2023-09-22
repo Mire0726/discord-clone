@@ -9,21 +9,21 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { auth, db } from "../../firebase";
 import { useAppSelector } from "../../app/hooks";
 import useCollection from "../../hooks/useCollection";
+import { addDoc, collection } from "firebase/firestore";
 // import { collection, query } from "firebase/firestore/lite";
 
 const Sidebar = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user.user);
   const { documents: channels } = useCollection("channels");
 
-  const addChannel = () => {
-    let channelName = prompt("新しいチャンネルを作成します");
+  const addChannel = async () => {
+    let channelName: string | null = prompt("新しいチャンネルを作成します");
 
-if (channelName){
-  await addDoc(collection(db,"channels"),{
-    channelName: channelName,
-  });
-}
-
+    if (channelName) {
+      await addDoc(collection(db, "channels"), {
+        channelName: channelName,
+      });
+    }
   };
 
   return (
